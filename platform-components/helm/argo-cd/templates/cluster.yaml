@@ -57,5 +57,18 @@ spec:
         metadataPolicy: None
         nullBytePolicy: Fail
 ---
+{{- else }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $clusterItem.name }}-config
+  namespace: {{ default "argocd" $clusterItem.namespace }} # ToDo: Investigate Potential integration bug with credential rotator
+  labels:
+    argocd.argoproj.io/secret-type: "cluster"
+    {{- if $clusterItem.additionalLabels }}
+    {{- $clusterItem.additionalLabels | toYaml | nindent 10 }}
+    {{- end }}
+data: {}
+---
 {{- end }}
 {{- end }}
