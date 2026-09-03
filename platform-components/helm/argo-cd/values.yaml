@@ -12,7 +12,7 @@ dexRestarter:
 clusterCredentialRotator:
   enabled: true
   schedule: "* * * * *"
-  suspend: true
+  suspend: false
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
