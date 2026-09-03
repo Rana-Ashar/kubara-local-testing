@@ -63,10 +63,10 @@ clusters:
           backupStorage:
             create: true
             region: eu01
-  - name: spoke-dev
+  - name: spoke-agent-test
     stage: dev
     type: spoke
-    dnsName: spoke-dev.local
+    dnsName: spoke-agent.local
     ssoOrg: local
     ssoTeam: local
     argocd:
