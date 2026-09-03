@@ -177,13 +177,6 @@ kube-prometheus-stack:
       server:
         root_url: https://172.18.0.3.traefik.me/grafana/
         serve_from_sub_path: true
-    additionalDataSources:
-      - access: proxy
-        isDefault: false
-        name: loki
-        type: loki
-        url: http://loki-headless.loki.svc.cluster.local:3100
-        version: 1
 prometheus-blackbox-exporter:
   image:
     pullSecrets:

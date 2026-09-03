@@ -1,6 +1,4 @@
 ---
-serviceMonitor:
-  enabled: false
 ingress:
   enabled: false
   path: /

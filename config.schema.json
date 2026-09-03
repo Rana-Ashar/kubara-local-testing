@@ -919,6 +919,897 @@
             "services"
           ],
           "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "argocd": {
+              "$ref": "#/$defs/ArgoCD",
+              "description": "Configuration for argoCD.",
+              "title": "ArgoCD"
+            },
+            "catalogs": {
+              "description": "Catalogs to be used by this cluster",
+              "items": {
+                "type": "string"
+              },
+              "title": "Catalogs",
+              "type": "array"
+            },
+            "dnsName": {
+              "description": "The fully qualified domain name for the cluster.",
+              "examples": [
+                "my-prod-cluster.example.com"
+              ],
+              "format": "hostname",
+              "title": "Primary DNS Name",
+              "type": "string"
+            },
+            "ingressClassName": {
+              "default": "traefik",
+              "description": "The ingress class to use for this cluster.",
+              "minLength": 1,
+              "title": "Ingress Class",
+              "type": "string"
+            },
+            "name": {
+              "const": "spoke-cli-test",
+              "description": "The unique name for the cluster.",
+              "examples": [
+                "my-prod-cluster"
+              ],
+              "minLength": 1,
+              "title": "Cluster Name",
+              "type": "string"
+            },
+            "services": {
+              "additionalProperties": false,
+              "description": "Configuration for deployed services.",
+              "properties": {
+                "cert-manager": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "config": {
+                      "properties": {
+                        "clusterIssuer": {
+                          "default": {},
+                          "properties": {
+                            "email": {
+                              "default": "yourname@your-domain.de",
+                              "format": "email",
+                              "type": "string"
+                            },
+                            "name": {
+                              "default": "letsencrypt-staging",
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "server": {
+                              "default": "https://acme-staging-v02.api.letsencrypt.org/directory",
+                              "format": "uri",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "email",
+                            "server"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "clusterIssuer"
+                      ],
+                      "type": "object"
+                    },
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "external-dns": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "external-secrets": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "homer-dashboard": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "kube-prometheus-stack": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "kyverno": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "kyverno-policies": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "kyverno-policy-reporter": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "loki": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "longhorn": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "metallb": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "config": {
+                      "properties": {
+                        "loadBalancerAddressPool": {
+                          "description": "MetalLB will allocate IPs from any configured address pool with free addresses. https://metallb.universe.tf/configuration/_advanced_ipaddresspool_configuration/",
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "publicLoadBalancerIPs": {
+                          "description": "Specifies a comma-separated list of IPs to be used for public DNS record targets https://kubernetes-sigs.github.io/external-dns/latest/docs/annotations/annotations/#external-dnsalphakubernetesiotarget",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "publicLoadBalancerIPs",
+                        "loadBalancerAddressPool"
+                      ],
+                      "type": "object"
+                    },
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "metrics-server": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "oauth2-proxy": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "reloader": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "traefik": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                },
+                "velero": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "config": {
+                      "properties": {
+                        "backupMode": {
+                          "default": "fs-backup",
+                          "description": "Volume backup strategy. fs-backup uses file-system backups via the node agent. csi-snapshot uses CSI snapshots. csi-data-mover uses CSI snapshots and moves snapshot data to object storage.",
+                          "enum": [
+                            "fs-backup",
+                            "csi-snapshot",
+                            "csi-data-mover"
+                          ],
+                          "type": "string"
+                        },
+                        "backupStorage": {
+                          "default": {},
+                          "description": "Backup storage configuration. Set create to true to let kubara create the backup bucket and credentials where supported. Set create to false to use an existing S3-compatible bucket. Set s3Url explicitly to the S3-compatible endpoint Velero should use.",
+                          "properties": {
+                            "bucketName": {
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "create": {
+                              "default": true,
+                              "type": "boolean"
+                            },
+                            "region": {
+                              "default": "eu01",
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "s3Url": {
+                              "description": "S3-compatible endpoint URL used by Velero. Must be set when Velero is enabled.",
+                              "format": "uri",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "networking": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "annotations": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "description": "Optional ingress annotation overrides for this service.",
+                          "title": "Ingress Annotations",
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "status": {
+                      "description": "The desired status of the service.",
+                      "enum": [
+                        "enabled",
+                        "disabled"
+                      ],
+                      "title": "Service Status",
+                      "type": "string"
+                    },
+                    "storage": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "className": {
+                          "description": "Optional storage class name override for persistent volumes.",
+                          "minLength": 1,
+                          "title": "Storage Class Name",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ],
+                  "type": "object"
+                }
+              },
+              "title": "Services",
+              "type": "object"
+            },
+            "ssoOrg": {
+              "description": "The SSO organization or group allowed to access this cluster.",
+              "minLength": 1,
+              "title": "SSO Organization",
+              "type": "string"
+            },
+            "ssoTeam": {
+              "description": "The specific SSO team or sub-group allowed to access this cluster.",
+              "minLength": 1,
+              "title": "SSO Team",
+              "type": "string"
+            },
+            "stage": {
+              "default": "dev",
+              "description": "The stage this cluster represents.",
+              "minLength": 1,
+              "title": "Deployment Stage",
+              "type": "string"
+            },
+            "terraform": {
+              "$ref": "#/$defs/Terraform",
+              "description": "Configuration for terraform resources.",
+              "title": "Terraform"
+            },
+            "type": {
+              "default": "hub",
+              "description": "The type of the cluster",
+              "enum": [
+                "hub",
+                "spoke"
+              ],
+              "title": "Cluster Type",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "dnsName",
+            "argocd",
+            "services"
+          ],
+          "type": "object"
         }
       ]
     },

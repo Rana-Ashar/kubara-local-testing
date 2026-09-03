@@ -14,10 +14,6 @@ namespace:
     stage: "local"
 imagePullSecrets:
   - name: image-pull-secret
-serviceMonitor:
-  enabled: true
-  additionalLabels:
-    monitoring.instance: "test-cluster-local"
 dashboardConfig:
   title: "kubara Developer Portal"
   subtitle: "local"

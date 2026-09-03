@@ -25,6 +25,31 @@ bootstrapValues:
           - kind: Secret
             name: cert-manager-webhook-ca
 
+  cluster:
+    - name: spoke-cli-test
+      project: test-cluster-local
+      secretStoreRef:
+        kind: ClusterSecretStore
+        name: test-cluster-local
+      remoteRef:
+        remoteKey: test-cluster/local/argocd/spoke-cli-test-dev
+        remoteKeyProperty: kubeconfig
+      additionalLabels:
+        cert-manager: "enabled"
+        external-dns: "enabled"
+        external-secrets: "enabled"
+        kube-prometheus-stack: "enabled"
+        kyverno: "enabled"
+        kyverno-policies: "enabled"
+        kyverno-policy-reporter: "enabled"
+        loki: "enabled"
+        longhorn: "disabled"
+        metallb: "disabled"
+        metrics-server: "disabled"
+        oauth2-proxy: "enabled"
+        reloader: "disabled"
+        traefik: "enabled"
+        velero: "disabled"
 
 
   applicationSets:
