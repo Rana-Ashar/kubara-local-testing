@@ -12,7 +12,7 @@ dexRestarter:
 clusterCredentialRotator:
   enabled: true
   schedule: "* * * * *"
-  suspend: false
+  suspend: true
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -33,14 +33,16 @@ clusterCredentialRotator:
     requiredType: "kubara.io/argocd-cluster-bootstrap"
     bootstrapKubeconfigKey: "bootstrapKubeconfig"
     generatedConfigKey: "config"
-  remoteAccess:
-    namespace: "kubara"
-    serviceAccountName: "kubara-argocd-manager"
-    clusterRoleBindingName: "kubara-argocd-manager"
+    configMapSuffix: "-config"
+  agent:
+    namespaceAnnotation: "kubara.io/agent-namespace"
+    defaultNamespace: "kubara"
+    serviceAccountName: "kubara-agent"
+    clusterRoleBindingName: "kubara-agent"
     clusterRoleName: "cluster-admin"
   token:
     duration: "10m"
-    refreshBefore: "2m"
+    refreshBefore: "5m"
 defaultProject:
   name: default
   description: |-

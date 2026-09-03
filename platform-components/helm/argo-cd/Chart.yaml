@@ -8,4 +8,4 @@ dependencies:
   # https://artifacthub.io/packages/helm/argo/argo-cd
   - name: argo-cd
     repository: https://argoproj.github.io/argo-helm
-    version: 10.6.4
+    version: 10.6.3
