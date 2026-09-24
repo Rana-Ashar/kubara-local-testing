@@ -63,3 +63,70 @@ clusters:
           backupStorage:
             create: true
             region: eu01
+  - name: spoke-cli-test
+    stage: local
+    type: spoke
+    dnsName: spoke.local
+    ssoOrg: local
+    ssoTeam: local
+    terraform:
+      provider: none
+      projectId: <project-id>
+      kubernetesType: edge
+      kubernetesVersion: 1.28.0
+      dns:
+        name: spoke.local
+        email: admin@spoke.local
+    argocd:
+      selfManaged: enabled
+      repo:
+        https:
+          configs:
+            url: https://github.com/Rana-Ashar/kubara-local-testing.git
+            targetRevision: main
+          components:
+            url: https://github.com/Rana-Ashar/kubara-local-testing.git
+            targetRevision: main
+    catalogs:
+      - /Users/mehmood/kubara-lab/catalogs/general
+    services:
+      cert-manager:
+        status: enabled
+        config:
+          clusterIssuer:
+            email: yourname@your-domain.de
+            name: letsencrypt-staging
+            server: https://acme-staging-v02.api.letsencrypt.org/directory
+      external-dns:
+        status: enabled
+      external-secrets:
+        status: enabled
+      kube-prometheus-stack:
+        status: enabled
+      kyverno:
+        status: enabled
+      kyverno-policies:
+        status: enabled
+      kyverno-policy-reporter:
+        status: enabled
+      loki:
+        status: enabled
+      longhorn:
+        status: disabled
+      metallb:
+        status: disabled
+      metrics-server:
+        status: disabled
+      oauth2-proxy:
+        status: enabled
+      reloader:
+        status: disabled
+      traefik:
+        status: enabled
+      velero:
+        status: disabled
+        config:
+          backupMode: fs-backup
+          backupStorage:
+            create: true
+            region: eu01
