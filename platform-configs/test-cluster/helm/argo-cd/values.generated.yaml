@@ -26,13 +26,13 @@ bootstrapValues:
             name: cert-manager-webhook-ca
 
   cluster:
-    - name: spoke-cli-test
+    - name: spoke1
       project: test-cluster-local
       secretStoreRef:
         kind: ClusterSecretStore
         name: test-cluster-local
       remoteRef:
-        remoteKey: test-cluster/local/argocd/spoke-cli-test-local
+        remoteKey: test-cluster/local/argocd/spoke1-local
         remoteKeyProperty: kubeconfig
       additionalLabels:
         cert-manager: "enabled"
