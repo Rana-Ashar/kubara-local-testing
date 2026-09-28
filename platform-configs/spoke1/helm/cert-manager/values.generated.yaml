@@ -15,7 +15,7 @@ cert-manager:
       - name: image-pull-secret
   prometheus:
     servicemonitor:
-      enabled: true
+      enabled: false
       labels:
         monitoring.instance: spoke1-local
 
