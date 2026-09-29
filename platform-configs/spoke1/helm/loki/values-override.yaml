@@ -64,10 +64,12 @@ alloy:
 
         prometheus.operator.servicemonitors "all" {
           forward_to = [prometheus.remote_write.thanos.receiver]
+          namespaces = []
         }
 
         prometheus.operator.podmonitors "all" {
           forward_to = [prometheus.remote_write.thanos.receiver]
+          namespaces = []
         }
 
         prometheus.remote_write "thanos" {
