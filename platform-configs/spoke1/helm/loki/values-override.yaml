@@ -64,12 +64,10 @@ alloy:
 
         prometheus.operator.servicemonitors "all" {
           forward_to = [prometheus.remote_write.thanos.receiver]
-          namespaces = []
         }
 
         prometheus.operator.podmonitors "all" {
           forward_to = [prometheus.remote_write.thanos.receiver]
-          namespaces = []
         }
 
         prometheus.remote_write "thanos" {
@@ -78,8 +76,8 @@ alloy:
             headers = {
               "Host" = "thanos-receive.172.18.0.3.traefik.me",
             }
-            external_labels = {
-              "cluster" = "spoke1",
-            }
+          }
+          external_labels {
+            cluster = "spoke1"
           }
         }
