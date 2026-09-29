@@ -64,10 +64,12 @@ alloy:
 
         prometheus.operator.servicemonitors "all" {
           forward_to = [prometheus.relabel.add_cluster_label.receiver]
+          namespaces = []
         }
 
         prometheus.operator.podmonitors "all" {
           forward_to = [prometheus.relabel.add_cluster_label.receiver]
+          namespaces = []
         }
 
         prometheus.relabel "add_cluster_label" {
