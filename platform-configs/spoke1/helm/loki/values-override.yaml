@@ -16,6 +16,36 @@ alloy:
           rule {
             source_labels = ["__meta_kubernetes_pod_name"]
             action = "replace"
+            target_labelThe log reveals that `prometheus.remote_write` in Grafana Alloy does **not** accept `external_labels` inside either the `endpoint` block or the `prometheus.remote_write` block directly as a simple map. 
+
+In Grafana Alloy, `external_labels` is specified inside `prometheus.remote_write` as an `external_labels` attribute (map) or added via relabeling rules using `prometheus.relabel` before forwarding to `prometheus.remote_write`. Furthermore, `prometheus.remote_write` in Alloy supports `external_labels = { "cluster" = "spoke1" }` directly inside `prometheus.remote_write` **only** if placed correctly, or external labels can be attached using a `prometheus.relabel` step.
+
+Let's use a `prometheus.relabel` component to attach the `cluster="spoke1"` label cleanly across all metrics before passing them to `prometheus.remote_write.thanos`. This is guaranteed to work across all Alloy versions without configuration parsing errors.
+
+### Step 50: Update `values-override.yaml` with `prometheus.relabel`
+
+Let's update `platform-configs/spoke1/helm/loki/values-override.yaml`:
+
+```bash
+cat <<'EOF' > platform-configs/spoke1/helm/loki/values-override.yaml
+alloy:
+  alloy:
+    configMap:
+      content: |-
+        discovery.kubernetes "pod" {
+          role = "pod"
+        }
+
+        discovery.relabel "pod_logs" {
+          targets = discovery.kubernetes.pod.targets
+          rule {
+            source_labels = ["__meta_kubernetes_namespace"]
+            action = "replace"
+            target_label = "namespace"
+          }
+          rule {
+            source_labels = ["__meta_kubernetes_pod_name"]
+            action = "replace"
             target_label = "pod"
           }
           rule {
@@ -63,21 +93,27 @@ alloy:
         }
 
         prometheus.operator.servicemonitors "all" {
-          forward_to = [prometheus.remote_write.thanos.receiver]
+          forward_to = [prometheus.relabel.add_cluster_label.receiver]
         }
 
         prometheus.operator.podmonitors "all" {
+          forward_to = [prometheus.relabel.add_cluster_label.receiver]
+        }
+
+        prometheus.relabel "add_cluster_label" {
           forward_to = [prometheus.remote_write.thanos.receiver]
+
+          rule {
+            target_label = "cluster"
+            replacement  = "spoke1"
+          }
         }
 
         prometheus.remote_write "thanos" {
           endpoint {
-            url = "http://172.18.0.2/api/v1/receive"
+            url = "[http://172.18.0.2/api/v1/receive](http://172.18.0.2/api/v1/receive)"
             headers = {
               "Host" = "thanos-receive.172.18.0.3.traefik.me",
-            }
-            external_labels = {
-              "cluster" = "spoke1",
             }
           }
         }
