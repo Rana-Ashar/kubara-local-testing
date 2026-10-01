@@ -1,0 +1,12 @@
+clusterSecretStores:
+  spoke1-local:
+    provider:
+      vault:
+        server: http://openbao.172.18.0.3.traefik.me:30106
+        path: kv
+        version: v2
+        auth:
+          tokenSecretRef:
+            name: openbao-token
+            namespace: external-secrets
+            key: token
