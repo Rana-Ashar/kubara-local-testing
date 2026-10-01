@@ -82,10 +82,10 @@ clusters:
       repo:
         https:
           configs:
-            url: https://git.example.com/platform/repo.git
+            url: https://github.com/Rana-Ashar/kubara-local-testing.git
             targetRevision: main
           components:
-            url: https://git.example.com/platform/repo.git
+            url: https://github.com/Rana-Ashar/kubara-local-testing.git
             targetRevision: main
     catalogs:
       - /Users/mehmood/kubara-lab/catalogs/general

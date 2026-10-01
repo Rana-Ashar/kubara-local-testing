@@ -65,13 +65,11 @@ alloy:
         prometheus.operator.servicemonitors "all" {
           forward_to = [prometheus.relabel.add_cluster_label.receiver]
           namespaces = []
-          allow_arbitrary_file_access = true
         }
 
         prometheus.operator.podmonitors "all" {
           forward_to = [prometheus.relabel.add_cluster_label.receiver]
           namespaces = []
-          allow_arbitrary_file_access = true
         }
 
         prometheus.relabel "add_cluster_label" {
