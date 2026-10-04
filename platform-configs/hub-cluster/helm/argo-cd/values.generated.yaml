@@ -25,6 +25,32 @@ bootstrapValues:
           - kind: Secret
             name: cert-manager-webhook-ca
 
+  cluster:
+    - name: spoke-1
+      project: hub-cluster-local
+      secretStoreRef:
+        kind: ClusterSecretStore
+        name: hub-cluster-local
+      remoteRef:
+        remoteKey: hub-cluster/local/argocd/spoke-1-local
+        remoteKeyProperty: kubeconfig
+      additionalLabels:
+        cert-manager: "disabled"
+        external-dns: "disabled"
+        external-secrets: "disabled"
+        homer-dashboard: "disabled"
+        kube-prometheus-stack: "disabled"
+        kyverno: "disabled"
+        kyverno-policies: "disabled"
+        kyverno-policy-reporter: "disabled"
+        loki: "disabled"
+        longhorn: "disabled"
+        metallb: "disabled"
+        metrics-server: "enabled"
+        oauth2-proxy: "disabled"
+        reloader: "disabled"
+        traefik: "disabled"
+        velero: "disabled"
 
 
   applicationSets:
