@@ -1,5 +1,0 @@
-longhorn:
-  ingress:
-    enabled: true
-    annotations: {}
-    tls: false
