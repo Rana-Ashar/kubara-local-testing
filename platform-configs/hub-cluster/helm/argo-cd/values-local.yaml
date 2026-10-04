@@ -1,0 +1,4 @@
+clusterCredentialRotator:
+  token:
+    duration: "168h"
+    refreshBefore: "1h"
