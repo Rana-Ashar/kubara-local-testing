@@ -3,7 +3,7 @@
 # To customize values, you can add additional files named values-*.yaml to this directory.
 
 ingress:
-  host: hub-cluster-local.traefik.me
+  host: 172.18.0.3.traefik.me
   path: "/"
   ingressClassName: traefik
   annotations:
