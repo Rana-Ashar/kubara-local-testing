@@ -27,11 +27,11 @@ kube-prometheus-stack:
         - /prometheus
       pathType: ImplementationSpecific
       hosts:
-        - 172.18.0.3.traefik.me
+        - hub-cluster-local.traefik.me
       tls:
         - secretName: tls-prometheus
           hosts:
-            - 172.18.0.3.traefik.me
+            - hub-cluster-local.traefik.me
 
 
     prometheusSpec:
@@ -47,7 +47,7 @@ kube-prometheus-stack:
             resources:
               requests:
                 storage: 10Gi
-      externalUrl: https://172.18.0.3.traefik.me/prometheus
+      externalUrl: https://hub-cluster-local.traefik.me/prometheus
       routePrefix: /prometheus
     thanosServiceMonitor:
       serviceMonitor:
@@ -65,11 +65,11 @@ kube-prometheus-stack:
         - /alertmanager
       pathType: ImplementationSpecific
       hosts:
-        - 172.18.0.3.traefik.me
+        - hub-cluster-local.traefik.me
       tls:
         - secretName: tls-alertmanager
           hosts:
-            - 172.18.0.3.traefik.me
+            - hub-cluster-local.traefik.me
 
 
 # Below is an example alertmanager.config section:
@@ -117,7 +117,7 @@ kube-prometheus-stack:
 #        - msteams-webhook-url
 #        - uptimerobot-webhook-url
 
-      externalUrl: https://172.18.0.3.traefik.me/alertmanager
+      externalUrl: https://hub-cluster-local.traefik.me/alertmanager
       routePrefix: /alertmanager
 
   kube-state-metrics:
@@ -168,14 +168,14 @@ kube-prometheus-stack:
       path: /grafana
       pathType: ImplementationSpecific
       hosts:
-        - 172.18.0.3.traefik.me
+        - hub-cluster-local.traefik.me
       tls:
         - secretName: tls-grafana
           hosts:
-            - 172.18.0.3.traefik.me
+            - hub-cluster-local.traefik.me
     grafana.ini:
       server:
-        root_url: https://172.18.0.3.traefik.me/grafana/
+        root_url: https://hub-cluster-local.traefik.me/grafana/
         serve_from_sub_path: true
 prometheus-blackbox-exporter:
   image:

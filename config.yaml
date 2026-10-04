@@ -4,7 +4,7 @@ clusters:
   - name: hub-cluster
     stage: local
     type: hub
-    dnsName: 172.18.0.3.traefik.me
+    dnsName: hub-cluster-local.traefik.me
     ssoOrg: local
     ssoTeam: local
     ingressClassName: traefik
