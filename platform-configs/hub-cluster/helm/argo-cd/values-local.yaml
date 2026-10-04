@@ -2,3 +2,10 @@ clusterCredentialRotator:
   token:
     duration: "168h"
     refreshBefore: "1h"
+
+dexRestarter:
+  enabled: false
+
+argo-cd:
+  dex:
+    enabled: false
