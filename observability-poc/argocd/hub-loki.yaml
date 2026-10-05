@@ -1,0 +1,32 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability-poc-hub-loki
+  namespace: argocd
+spec:
+  project: observability-poc
+
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: loki
+      targetRevision: 7.3.0
+      helm:
+        releaseName: hub-loki
+        valueFiles:
+          - $values/observability-poc/hub/loki/values.yaml
+
+    - repoURL: https://github.com/Rana-Ashar/kubara-local-testing.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    name: hub-cluster
+    namespace: observability
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
