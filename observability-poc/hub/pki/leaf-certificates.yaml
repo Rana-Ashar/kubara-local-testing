@@ -1,0 +1,44 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: telemetry-server
+  namespace: observability
+spec:
+  secretName: telemetry-server-tls
+  commonName: loki.172.18.0.2.traefik.me
+  dnsNames:
+    - loki.172.18.0.2.traefik.me
+    - thanos.172.18.0.2.traefik.me
+  duration: 720h
+  renewBefore: 168h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  usages:
+    - digital signature
+    - server auth
+  issuerRef:
+    name: telemetry-ca
+    kind: Issuer
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: telemetry-client-spoke-1
+  namespace: observability
+spec:
+  secretName: telemetry-client-spoke-1
+  commonName: spoke-1
+  duration: 168h
+  renewBefore: 24h
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  usages:
+    - digital signature
+    - client auth
+  issuerRef:
+    name: telemetry-ca
+    kind: Issuer
