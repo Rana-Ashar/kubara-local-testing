@@ -1,0 +1,58 @@
+---
+collector:
+  crds:
+    create: false
+
+  controller:
+    type: daemonset
+    volumes:
+      extra:
+        - name: telemetry-tls
+          secret:
+            secretName: telemetry-client-spoke-1
+
+  alloy:
+    mounts:
+      varlog: true
+      extra:
+        - name: telemetry-tls
+          mountPath: /etc/alloy/tls
+          readOnly: true
+
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
+
+    configMap:
+      content: |-
+        prometheus.exporter.self "alloy" {}
+
+        prometheus.scrape "alloy" {
+          targets    = prometheus.exporter.self.alloy.targets
+          forward_to = [prometheus.remote_write.hub.receiver]
+        }
+
+        prometheus.remote_write "hub" {
+          external_labels = {
+            cluster      = "spoke-1",
+            cluster_type = "spoke",
+            stage        = "local",
+          }
+
+          endpoint {
+            url = "https://thanos.172.18.0.2.traefik.me:32531/api/v1/receive"
+
+            tls_config {
+              ca_file     = "/etc/alloy/tls/ca.crt"
+              cert_file   = "/etc/alloy/tls/tls.crt"
+              key_file    = "/etc/alloy/tls/tls.key"
+              min_version = "TLS12"
+            }
+          }
+        }
+
+  serviceMonitor:
+    enabled: false
