@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability-poc-hub-thanos
+  namespace: argocd
+spec:
+  project: hub-cluster-local
+
+  source:
+    repoURL: https://github.com/Rana-Ashar/kubara-local-testing.git
+    targetRevision: main
+    path: observability-poc/hub/thanos
+
+  destination:
+    name: hub-cluster
+    namespace: observability
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
