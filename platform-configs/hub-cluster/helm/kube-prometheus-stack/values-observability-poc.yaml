@@ -4,3 +4,7 @@ kube-prometheus-stack:
     extraEmptyDirMounts:
       - name: tmp
         mountPath: /tmp
+
+    grafana.ini:
+      plugins:
+        preinstall_auto_update: false
