@@ -13,6 +13,8 @@ spec:
   destinations:
     - namespace: observability
       server: "*"
+    - namespace: kube-prometheus-stack
+      server: '*'
   clusterResourceWhitelist:
     - group: rbac.authorization.k8s.io
       kind: ClusterRole
