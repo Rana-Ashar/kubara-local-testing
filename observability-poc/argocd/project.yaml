@@ -16,6 +16,8 @@ spec:
     - namespace: kube-prometheus-stack
       server: '*'
   clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
     - group: rbac.authorization.k8s.io
       kind: ClusterRole
     - group: rbac.authorization.k8s.io
