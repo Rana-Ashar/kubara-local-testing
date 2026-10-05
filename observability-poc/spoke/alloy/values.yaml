@@ -34,6 +34,76 @@ alloy:
         forward_to = [prometheus.remote_write.hub.receiver]
       }
 
+      discovery.kubernetes "pods" {
+        role = "pod"
+      }
+
+      discovery.relabel "kube_state_metrics" {
+        targets = discovery.kubernetes.pods.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          regex         = "observability"
+          action        = "keep"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          regex         = "kube-state-metrics"
+          action        = "keep"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_port_name"]
+          regex         = "http"
+          action        = "keep"
+        }
+
+        rule {
+          target_label = "job"
+          replacement  = "kube-state-metrics"
+        }
+      }
+
+      prometheus.scrape "kube_state_metrics" {
+        targets         = discovery.relabel.kube_state_metrics.output
+        forward_to      = [prometheus.remote_write.hub.receiver]
+        scrape_interval = "30s"
+      }
+
+      discovery.relabel "node_exporter" {
+        targets = discovery.kubernetes.pods.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          regex         = "observability"
+          action        = "keep"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          regex         = "prometheus-node-exporter"
+          action        = "keep"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_port_name"]
+          regex         = "metrics"
+          action        = "keep"
+        }
+
+        rule {
+          target_label = "job"
+          replacement  = "node-exporter"
+        }
+      }
+
+      prometheus.scrape "node_exporter" {
+        targets         = discovery.relabel.node_exporter.output
+        forward_to      = [prometheus.remote_write.hub.receiver]
+        scrape_interval = "30s"
+      }
+
       prometheus.remote_write "hub" {
         external_labels = {
           cluster      = "spoke-1",
