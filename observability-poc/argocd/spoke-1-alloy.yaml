@@ -5,7 +5,7 @@ metadata:
   name: observability-poc-spoke-1-alloy
   namespace: argocd
 spec:
-  project: hub-cluster-local
+  project: observability-poc
 
   sources:
     - repoURL: https://grafana.github.io/helm-charts

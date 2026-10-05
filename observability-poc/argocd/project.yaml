@@ -1,0 +1,22 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: observability-poc
+  namespace: argocd
+spec:
+  description: Isolated project for the centralized observability PoC
+
+  sourceRepos:
+    - https://github.com/Rana-Ashar/kubara-local-testing.git
+    - https://grafana.github.io/helm-charts
+
+  destinations:
+    - namespace: observability
+      server: "*"
+
+  clusterResourceWhitelist:
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRole
+    - group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
