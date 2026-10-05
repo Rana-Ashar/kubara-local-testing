@@ -7,10 +7,18 @@ metadata:
 spec:
   project: hub-cluster-local
 
-  source:
-    repoURL: https://github.com/Rana-Ashar/kubara-local-testing.git
-    targetRevision: main
-    path: observability-poc/spoke/alloy
+  sources:
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: alloy
+      targetRevision: 1.12.1
+      helm:
+        releaseName: spoke-1-alloy
+        valueFiles:
+          - $values/observability-poc/spoke/alloy/values.yaml
+
+    - repoURL: https://github.com/Rana-Ashar/kubara-local-testing.git
+      targetRevision: main
+      ref: values
 
   destination:
     name: spoke-1
