@@ -1,0 +1,4 @@
+---
+grafana:
+  env:
+    GF_PLUGINS_PREINSTALL_SYNC: prometheus
