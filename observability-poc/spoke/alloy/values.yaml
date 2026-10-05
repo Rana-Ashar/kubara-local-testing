@@ -1,30 +1,26 @@
 ---
 crds:
   create: false
-
 controller:
-  type: daemonset
+  type: deployment
   volumes:
     extra:
       - name: telemetry-tls
         secret:
           secretName: telemetry-client-spoke-1
-
+  replicas: 1
 alloy:
   mounts:
-    varlog: true
     extra:
       - name: telemetry-tls
         mountPath: /etc/alloy/tls
         readOnly: true
-
   resources:
     requests:
       cpu: 50m
       memory: 128Mi
     limits:
       memory: 256Mi
-
   configMap:
     content: |-
       prometheus.exporter.self "alloy" {}
@@ -123,5 +119,79 @@ alloy:
         }
       }
 
+      discovery.relabel "pod_logs" {
+        targets = discovery.kubernetes.pods.targets
+
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          action        = "replace"
+          target_label  = "namespace"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          action        = "replace"
+          target_label  = "pod"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          action        = "replace"
+          target_label  = "container"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_node_name"]
+          action        = "replace"
+          target_label  = "node"
+        }
+
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          action        = "replace"
+          target_label  = "app"
+        }
+
+        rule {
+          source_labels = [
+            "__meta_kubernetes_namespace",
+            "__meta_kubernetes_pod_container_name",
+          ]
+          action       = "replace"
+          target_label = "job"
+          separator    = "/"
+          replacement  = "$1"
+        }
+      }
+
+      loki.source.kubernetes "pod_logs" {
+        targets    = discovery.relabel.pod_logs.output
+        forward_to = [loki.process.pod_logs.receiver]
+      }
+
+      loki.process "pod_logs" {
+        stage.static_labels {
+          values = {
+            cluster      = "spoke-1",
+            cluster_type = "spoke",
+            stage        = "local",
+          }
+        }
+
+        forward_to = [loki.write.hub.receiver]
+      }
+
+      loki.write "hub" {
+        endpoint {
+          url = "https://loki.172.18.0.2.traefik.me:32531/loki/api/v1/push"
+
+          tls_config {
+            ca_file     = "/etc/alloy/tls/ca.crt"
+            cert_file   = "/etc/alloy/tls/tls.crt"
+            key_file    = "/etc/alloy/tls/tls.key"
+            min_version = "TLS12"
+          }
+        }
+      }
 serviceMonitor:
   enabled: false
