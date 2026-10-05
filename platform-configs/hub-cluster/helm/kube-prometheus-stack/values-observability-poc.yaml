@@ -1,4 +1,5 @@
 ---
-grafana:
-  env:
-    GF_PLUGINS_PREINSTALL_SYNC: prometheus
+kube-prometheus-stack:
+  grafana:
+    env:
+      GF_PLUGINS_PREINSTALL_SYNC: prometheus
