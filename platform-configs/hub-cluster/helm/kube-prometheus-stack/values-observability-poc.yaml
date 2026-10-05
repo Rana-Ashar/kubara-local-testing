@@ -1,5 +1,6 @@
 ---
 kube-prometheus-stack:
   grafana:
-    env:
-      GF_PLUGINS_PREINSTALL_SYNC: prometheus
+    extraEmptyDirMounts:
+      - name: tmp
+        mountPath: /tmp
