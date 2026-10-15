@@ -37,7 +37,7 @@ bootstrapValues:
       additionalLabels:
         cert-manager: "disabled"
         external-dns: "disabled"
-        external-secrets: "disabled"
+        external-secrets: "enabled"
         homer-dashboard: "disabled"
         kube-prometheus-stack: "disabled"
         kyverno: "disabled"
@@ -48,7 +48,7 @@ bootstrapValues:
         metallb: "disabled"
         metrics-server: "enabled"
         oauth2-proxy: "disabled"
-        reloader: "disabled"
+        reloader: "enabled"
         traefik: "disabled"
         velero: "disabled"
 

@@ -93,7 +93,7 @@ clusters:
       external-dns:
         status: disabled
       external-secrets:
-        status: disabled
+        status: enabled
       homer-dashboard:
         status: disabled
       kube-prometheus-stack:
@@ -115,7 +115,7 @@ clusters:
       oauth2-proxy:
         status: disabled
       reloader:
-        status: disabled
+        status: enabled
       traefik:
         status: disabled
       velero:
