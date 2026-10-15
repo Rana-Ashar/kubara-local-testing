@@ -1,4 +1,3 @@
----
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -18,27 +17,6 @@ spec:
   usages:
     - digital signature
     - server auth
-  issuerRef:
-    name: telemetry-ca
-    kind: Issuer
-
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: telemetry-client-spoke-1
-  namespace: observability
-spec:
-  secretName: telemetry-client-spoke-1
-  commonName: spoke-1
-  duration: 168h
-  renewBefore: 24h
-  privateKey:
-    algorithm: ECDSA
-    size: 256
-  usages:
-    - digital signature
-    - client auth
   issuerRef:
     name: telemetry-ca
     kind: Issuer
