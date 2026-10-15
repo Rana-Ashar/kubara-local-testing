@@ -7,7 +7,7 @@ issuer:
   kind: Issuer
 
 certificate:
-  create: false
+  create: true
   duration: 168h
   renewBefore: 24h
 
