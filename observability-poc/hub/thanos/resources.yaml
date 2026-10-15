@@ -107,7 +107,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: thanos.172.18.0.2.traefik.me
+    - host: thanos.172.18.0.4.traefik.me
       http:
         paths:
           - path: /api/v1/receive
@@ -120,7 +120,7 @@ spec:
   tls:
     - secretName: telemetry-server-tls
       hosts:
-        - thanos.172.18.0.2.traefik.me
+        - thanos.172.18.0.4.traefik.me
 
 ---
 apiVersion: apps/v1

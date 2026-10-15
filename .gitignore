@@ -73,3 +73,6 @@ out/
 /go.sum
 /go.mod
 bin/
+
+!observability-poc/charts/
+!observability-poc/charts/**

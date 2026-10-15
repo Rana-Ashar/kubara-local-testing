@@ -3,11 +3,13 @@ crds:
   create: false
 controller:
   type: deployment
+  extraAnnotations:
+    secret.reloader.stakater.com/reload: "telemetry-client"
   volumes:
     extra:
       - name: telemetry-tls
         secret:
-          secretName: telemetry-client-spoke-1
+          secretName: telemetry-client
   replicas: 1
 alloy:
   mounts:
@@ -108,7 +110,7 @@ alloy:
         }
 
         endpoint {
-          url = "https://thanos.172.18.0.2.traefik.me:32531/api/v1/receive"
+          url = "https://thanos.172.18.0.4.traefik.me:32531/api/v1/receive"
 
           tls_config {
             ca_file     = "/etc/alloy/tls/ca.crt"
@@ -183,7 +185,7 @@ alloy:
 
       loki.write "hub" {
         endpoint {
-          url = "https://loki.172.18.0.2.traefik.me:32531/loki/api/v1/push"
+          url = "https://loki.172.18.0.4.traefik.me:32531/loki/api/v1/push"
 
           tls_config {
             ca_file     = "/etc/alloy/tls/ca.crt"

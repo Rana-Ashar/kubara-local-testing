@@ -51,12 +51,12 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls.options: observability-telemetry-mtls@kubernetescrd
 
   hosts:
-    - loki.172.18.0.2.traefik.me
+    - loki.172.18.0.4.traefik.me
 
   tls:
     - secretName: telemetry-server-tls
       hosts:
-        - loki.172.18.0.2.traefik.me
+        - loki.172.18.0.4.traefik.me
 
 # Disable components that add no value to this single-node PoC.
 backend:
